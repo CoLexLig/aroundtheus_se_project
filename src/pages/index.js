@@ -42,7 +42,7 @@ let cardList;
 const api = new Api({
   baseUrl: "https://around-api.en.tripleten-services.com/v1",
   headers: {
-    authorization: "60e8627a-87a1-4754-957b-4e30882d5630",
+    authorization: "60e8627a-87a1-4754-957b-4e30882d5630bc57b670-8e63-4167-83e5-401180ae4f8e",
     "Content-Type": "application/json",
   },
 });
