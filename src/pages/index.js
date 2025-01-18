@@ -56,18 +56,17 @@ const userInfo = new UserInfo({
 Promise.all([api.getUserInfo(), api.getInitialCards()])
   .then(([user, initialCards]) => {
     userInfo.setUserInfo(user);
-    userID = user._id;
-    userInfo.setUserInfo(user);
+    userID = user.id;  // Removed underscore
 
     cardList = new Section(
       {
         items: initialCards,
-        renderer: ({ name, link, isLiked, _id, userId, ownerId }) => {
+        renderer: ({ name, link, isLiked, id, userId, ownerId }) => {  // Removed underscore
           const newCard = createCard({
             name,
             link,
             isLiked,
-            _id,
+            id,  // Removed underscore
             userId,
             ownerId,
           });
@@ -85,16 +84,16 @@ Promise.all([api.getUserInfo(), api.getInitialCards()])
 // =============================================================================
 
 function handleLikeClick(cardInstance) {
-  if (cardInstance._likes) {
+  if (cardInstance.likes) {
     api
-      .unlikeCard(cardInstance._id)
+      .unlikeCard(cardInstance.id)  // Removed underscore
       .then((res) => {
         cardInstance.setLikes(res.isLiked);
       })
       .catch(console.error);
   } else {
     api
-      .likeCard(cardInstance._id)
+      .likeCard(cardInstance.id)  // Removed underscore
       .then((res) => {
         cardInstance.setLikes(res.isLiked);
       })
@@ -126,9 +125,9 @@ function handleDeleteClick(card) {
   });
 }
 
-function createCard({ name, link, isLiked, _id, userId, ownerId }) {
+function createCard({ name, link, isLiked, id, userId, ownerId }) {  // Removed underscore
   const cardElement = new Card(
-    { name, link, isLiked, _id, userId, ownerId },
+    { name, link, isLiked, id, userId, ownerId },  // Removed underscore
     userID,
     "#card-template",
     handleCardClick,
@@ -137,24 +136,19 @@ function createCard({ name, link, isLiked, _id, userId, ownerId }) {
   );
   return cardElement.getView();
 }
+
 // =============================================================================
 // Preview Popup
 // =============================================================================
 
 const previewImagePopup = new PopupWithImage({
-  popupSelector: "#preview-modal",
-  handleFormSubmit: handleProfileEditSubmit,
+  popupSelector: "#preview-modal"
 });
 previewImagePopup.setEventListeners();
 
 // =============================================================================
 // Profile Popup
 // =============================================================================
-
-function handleProfileEditSubmit({ name, about }) {
-  newUser.setUserInfo(name, about);
-  profilePopup.close();
-}
 
 const profilePopup = new PopupWithForm({
   popupSelector: "#profile-edit-modal",
@@ -264,7 +258,6 @@ const editAvatarPopup = new PopupWithForm({
   loadingButtonText: "Saving...",
 });
 
-editAvatarPopup.close();
 editAvatarPopup.setEventListener();
 
 avatarEditButton.addEventListener("click", () => {
