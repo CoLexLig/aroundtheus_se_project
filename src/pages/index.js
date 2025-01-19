@@ -142,8 +142,7 @@ function createCard({ name, link, isLiked, _id, userId, ownerId }) {
 // =============================================================================
 
 const previewImagePopup = new PopupWithImage({
-  popupSelector: "#preview-modal",
-  handleFormSubmit: handleProfileEditSubmit,
+  popupSelector: "#preview-modal"
 });
 previewImagePopup.setEventListeners();
 
